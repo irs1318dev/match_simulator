@@ -9,6 +9,7 @@ import field
 from enum import Enum
 import time
 import math
+import copy
 
 class state(Enum):
     IDLE = 1
@@ -81,31 +82,35 @@ class robot:
         self.climb_rate=1           # speed of retracting (climbing)
         self.time_to_balance=1      # time to achieve balance
 
-    def get_mesh(self):
-        box_points=[]
-        box_points.append(glm.vec3( int(-self.length/2),
+        self.mesh=[]
+
+        self.mesh.append(glm.vec3( int(-self.length/2),
                                     int(-self.width/2),
                                     0))
-        box_points.append(glm.vec3( int(-self.length/2)+self.length,
+        self.mesh.append(glm.vec3( int(-self.length/2)+self.length,
                                     int(-self.width/2),
                                     0))
-        box_points.append(glm.vec3( int(-self.length/2)+self.length,
+        self.mesh.append(glm.vec3( int(-self.length/2)+self.length,
                                     int(-self.width/2)+self.width,
                                     0))
-        box_points.append(glm.vec3( int(-self.length/2),
+        self.mesh.append(glm.vec3( int(-self.length/2),
                                     int(-self.width/2)+self.width,
                                     0))
-        box_points.append(glm.vec3( int(-self.length/2),
+        self.mesh.append(glm.vec3( int(-self.length/2),
                                     int(-self.width/2),
                                     0))
         # draw the triangle (front)
-        box_points.append(glm.vec3( 0,
+        self.mesh.append(glm.vec3( 0,
                                     0,
                                     0))
-        box_points.append(glm.vec3( int(-self.length/2)+self.length,
+        self.mesh.append(glm.vec3( int(-self.length/2)+self.length,
                                     int(-self.width/2),
                                     0))
-        return (box_points.copy()) 
+
+
+    def get_mesh(self):
+        local_mesh=copy.deepcopy(self.mesh)
+        return (local_mesh) 
 
 
     def draw(self, surface):
