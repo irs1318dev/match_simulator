@@ -107,6 +107,13 @@ class robot:
                                     int(-self.width/2),
                                     0))
 
+        # calculate the collide rays
+#        self.collide_rays=draw.calc_collide_rays(100, self.length)
+
+
+    def get_collide_rays(self):
+        local_rays = copy.deepcopy(self.pos.collide_rays)
+        return (local_rays)
 
     def get_mesh(self):
         local_mesh=copy.deepcopy(self.mesh)
@@ -135,12 +142,8 @@ class robot:
 
         draw.draw_mesh(surface, box_points, self.pos.center_pos, angle_heading, self.color)
 
-        draw_ray=[]
-        draw_ray.append(glm.vec3(0,-20,0)*self.pos.velocity)
-        #draw_ray.append(glm.vec3(0,-10,0))
-
+        draw_ray=self.get_collide_rays()
         draw.draw_rays(surface, draw_ray, self.pos.center_pos, angle_heading, self.color)
-        #draw.collide_rays(draw_ray, self.pos.center_pos, angle_heading)
 
 
         self.draw_ball(surface, self.firing_target.x, self.firing_target.y, 18, self.color)

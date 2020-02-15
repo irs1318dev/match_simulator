@@ -202,8 +202,9 @@ def rotate_points(points_list, angle):
         # simple 2d rotation about the Z axis following sum angle rule
         x2=((points_list[i].x*glm.cos(angle)) - (points_list[i].y*glm.sin(angle)))
         y2=((points_list[i].x*glm.sin(angle)) + (points_list[i].y*glm.cos(angle)))
-        points_list[i].x = int(x2)
-        points_list[i].y = int(y2)
+        if ((math.isnan(x2) == False) and (math.isnan(y2) == False)):
+            points_list[i].x = int(x2)
+            points_list[i].y = int(y2)
         i += 1
     return points_list
     
